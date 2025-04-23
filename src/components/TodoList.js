@@ -20,7 +20,7 @@ function TodoList({ todos }) {
               {todo}
               <button
                 onClick={() => handleComplete(index)}
-                data-testid={`complete-button-${index}`} // helpful for Cypress
+                
               >
                 Complete
               </button>
