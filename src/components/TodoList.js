@@ -1,8 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 
-function TodoList(props) {
-    let list=props.todos
+function TodoList({todos}) {
     const [completed, setCompleted] = useState([]);
    function handleComplete(index){
         setCompleted([...completed,index])
@@ -11,19 +10,24 @@ function TodoList(props) {
     <div>
         <h2>Child Component</h2>
         <ul>
-        {
-                    list.map((todo, index) => (
+        {todos.map((todo, index) => {
+                    const isCompleted = completed.includes(index);
+                    return (
                         <li key={index}>
                             {todo}
-                            {
-                                completed.includes(index)
-                                ? null
-                                : <button onClick={() => handleComplete(index)}>Complete</button>
-                            }
+                            {!isCompleted && (
+                                <button
+                                    onClick={() => handleComplete(index)}
+                                    data-testid={`complete-button-${index}`} // helpful for Cypress
+                                >
+                                    Complete
+                                </button>
+                            )}
                         </li>
-                    ))
-                }
-            </ul>
+                    );
+                })}
+            
+        </ul>
     </div>
   )
 }
