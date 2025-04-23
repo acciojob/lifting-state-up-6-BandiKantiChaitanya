@@ -4,7 +4,7 @@ function TodoList({ todos }) {
   const [completed, setCompleted] = useState([]);
 
   function handleComplete(index) {
-    setCompleted([...completed, index]);
+    setCompleted((prevCompleted) => [...prevCompleted, index]);
   }
 
   return (
@@ -12,18 +12,21 @@ function TodoList({ todos }) {
       <h2>Child Component</h2>
       <ul>
         {todos.map((todo, index) => {
-          if (completed.includes(index)) {
-            return <li key={index}>{todo} (Completed)</li>; // No button if completed
-          }
+          // Check if the current todo is marked as completed
+          const isCompleted = completed.includes(index);
+
           return (
             <li key={index}>
               {todo}
-              <button
-                onClick={() => handleComplete(index)}
-                
-              >
-                Complete
-              </button>
+              {/* Only render the button if the todo is not completed */}
+              {isCompleted ? null : (
+                <button
+                  onClick={() => handleComplete(index)}
+                  data-testid={`complete-button-${index}`}
+                >
+                  Complete
+                </button>
+              )}
             </li>
           );
         })}
