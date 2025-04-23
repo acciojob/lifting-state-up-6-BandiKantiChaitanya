@@ -16,9 +16,9 @@ function TodoList(props) {
                         <li key={index}>
                             {todo}
                             {
-                                !completed.includes(index) && (
-                                    <button onClick={()=>{handleComplete(index)}}  >Complete</button>
-                                )
+                                completed.includes(index)
+                                ? null
+                                : <button onClick={() => handleComplete(index)}>Complete</button>
                             }
                         </li>
                     ))
